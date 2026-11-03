@@ -1,0 +1,17 @@
+# fe_rope_half RTL fixture (regen: make fx-rtl)
+head_dim 128
+n_heads 16
+n_kv 8
+B 2
+start_pos 3
+theta 1e+06
+q_off 139232
+k_off 260656
+cosq_off 110560
+sinq_off 118752
+cosk_off 126944
+sink_off 131040
+s1_off 155616
+s2_off 163808
+window 295472
+n_words 101

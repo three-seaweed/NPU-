@@ -1,0 +1,13 @@
+{
+  "name": "qwen3-webui",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "湘江 NPU Qwen3 端侧对话的浏览器前端桥（SSE + ssh2），mock-first",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ssh2": "^1.16.0"
+  }
+}

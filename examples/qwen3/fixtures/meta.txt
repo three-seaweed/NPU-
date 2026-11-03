@@ -1,0 +1,4 @@
+vocab_size 151936
+n_tokenize_cases 35
+n_forward_cases 3
+torch_dtype fp32

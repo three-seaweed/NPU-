@@ -1,0 +1,62 @@
+package build
+
+import mill._
+import mill.scalalib._
+
+// xnpu Chisel module. Existing sources live under src/main/scala and tests
+// under src/test/scala, so the default Mill layout is overridden below.
+object xnpu extends ScalaModule {
+  def scalaVersion = "2.13.16"
+
+  def mvnDeps = Seq(
+    mvn"org.chipsalliance::chisel:6.7.0",
+  )
+
+  def scalacPluginMvnDeps = Seq(
+    mvn"org.chipsalliance:::chisel-plugin:6.7.0",
+  )
+
+  def scalacOptions = Seq(
+    "-Ymacro-annotations",
+    "-language:reflectiveCalls",
+  )
+
+  def sources = Task.Sources(moduleDir / os.up / "src" / "main" / "scala")
+
+  object test extends ScalaTests with TestModule.ScalaTest {
+    def mvnDeps = Seq(
+      mvn"edu.berkeley.cs::chiseltest:6.0.0",
+    )
+
+    def sources = Task.Sources(moduleDir / os.up / os.up / "src" / "test" / "scala")
+
+    // The full-Core specs interpret a large treadle graph; running every test
+    // class as a parallel forked JVM exhausts RAM on small machines (the daemon
+    // gets OOM-killed). Serialise into a single subprocess and cap its heap.
+    def testParallelism = false
+
+    // Forward XNPU_BACKEND into the forked JVM so tests can pick a simulator
+    // without editing any spec (see src/test/scala/TestBackend.scala):
+    //   XNPU_BACKEND=verilator mill xnpu.test.testOnly '*DtcmDualPortSpec'
+    // Unset leaves chiseltest's default (Treadle) in place.
+    // The backend selection must be a Task.Input, which Mill re-evaluates every
+    // run. Reading the environment inside a plain Task (whether through sys.env
+    // or Task.env) is invisible to invalidation: the first evaluation is cached
+    // and every later run silently keeps that backend, no matter what
+    // XNPU_BACKEND says. That is not a cosmetic problem -- it decides whether a
+    // whole test session actually ran on the simulator you asked for.
+    def backendSelection = Task.Input { Task.env.get("XNPU_BACKEND") }
+    // Same Input/env discipline as XNPU_BACKEND: XNPU_VCD=1 turns on waveform
+    // dumping for the selected backend (see TestBackend.backendAnnos);
+    // XNPU_POLLCAP=n lowers a spec's kick-poll bound for fast VCD capture of
+    // a wedge (see Qwen3LayerRtlSpec's poll loop).
+    def vcdSelection = Task.Input { Task.env.get("XNPU_VCD") }
+    def pollCapSelection = Task.Input { Task.env.get("XNPU_POLLCAP") }
+
+    def forkArgs = Task {
+      Seq("-Xmx3g") ++ backendSelection().map(b => s"-Dxnpu.backend=$b") ++
+        vcdSelection().map(_ => "-Dxnpu.vcd=1") ++
+        pollCapSelection().map(v => s"-Dxnpu.pollcap=$v")
+    }
+  }
+}

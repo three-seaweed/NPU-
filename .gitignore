@@ -1,0 +1,23 @@
+# Mill / Chisel build artifacts
+out/
+generated/
+*.vcd
+*.fir
+
+# C build artifacts
+*.o
+*.a
+*.elf
+examples/qwen3/build/
+examples/qwen3/tests/dbg_forward
+examples/qwen3/tests/test_layer_map
+examples/qwen3/xnpu/fx_layer
+examples/qwen3/xnpu/fx_qknorm
+examples/qwen3/xnpu/fx_rope
+
+# Web UI
+node_modules/
+
+# Run logs and scratch
+logs/
+*.log

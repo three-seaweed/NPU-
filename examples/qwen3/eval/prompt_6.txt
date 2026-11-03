@@ -1,0 +1,2 @@
+What is the smallest positive perfect cube that can be written as the sum of three consecutive integers?
+Please reason step by step, and put your final answer within \boxed{}.

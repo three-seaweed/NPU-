@@ -1,0 +1,8 @@
+# bf16 8x8 core-level fixture (board bf16selftest replica)
+dim 8
+a1 0
+a2 512
+b 1024
+c 1536
+window 1664
+mode bf16k8

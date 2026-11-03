@@ -1,0 +1,14 @@
+# fe_qknorm RTL fixture (regen: make fx-rtl)
+head_dim 128
+n_heads 16
+n_kv 8
+B 2
+q_off 139232
+k_off 260656
+qg_off 110048
+kg_off 110304
+zero_off 5120
+sc_off 9216
+eps 1e-06
+window 295472
+n_words 99

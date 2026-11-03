@@ -1,0 +1,2 @@
+What is the distance, in units, between the points $(2, -6)$ and $(-4, 3)$? Express your answer in simplest radical form.
+Please reason step by step, and put your final answer within \boxed{}.

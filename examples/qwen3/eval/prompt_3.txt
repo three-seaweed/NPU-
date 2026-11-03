@@ -1,0 +1,2 @@
+How many positive whole-number divisors does 196 have?
+Please reason step by step, and put your final answer within \boxed{}.

@@ -1,0 +1,26 @@
+# layer kick RTL fixture (regen: make fx-rtl)
+layer 0
+B 2
+start_pos 3
+gs 32
+eps 1e-05
+theta 10000
+dim 64
+hidden 192
+q_dim 128
+kv_dim 64
+head_dim 32
+n_heads 4
+n_kv 2
+window 18784
+ddr_bytes 68992
+n_words 2278
+desc_off 0
+x_off 8080
+q_off 8336
+atto_off 8848
+h2_off 14944
+ddr_xbuf 0
+ddr_kc 2432
+ddr_vc 3072
+kv_row_bytes 128

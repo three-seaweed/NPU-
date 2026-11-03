@@ -1,0 +1,4 @@
+# 大权重/分词器产物不进仓（由 qwen3_export 生成）
+build/
+*.bin
+!fixtures/*.f32
